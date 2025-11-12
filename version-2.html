@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autodesk Leasing Quote Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+    }
+
+    .lease-card {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .dropdown-wrapper {
+      margin-bottom: 32px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #ff9800;
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+    }
+
+    .input-group {
+      margin-bottom: 32px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      background: #ffe0b2;
+      padding: 12px 16px;
+      border-radius: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      font-size: 15px;
+      border: 2px solid #ffe0b2;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #ff9800;
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff9800;
+      font-size: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .payment-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      background: #ffe0b2;
+      padding: 12px 16px;
+      border-radius: 6px;
+    }
+
+    .payment-amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .payment-note {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .compare-section {
+      margin: 32px 0;
+    }
+
+    .compare-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .compare-table th {
+      text-align: left;
+      padding: 12px;
+      background: #ffe0b2;
+      border: 1px solid #ffcc80;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .compare-table td {
+      padding: 12px;
+      border: 1px solid #ffcc80;
+      color: #374151;
+      background: #fff;
+    }
+
+    .compare-table tr:nth-child(even) td {
+      background: #fff8e1;
+    }
+
+    .warning-box {
+      display: flex;
+      gap: 12px;
+      background: #fff3e0;
+      border: 2px solid #ffb74d;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 24px 0;
+    }
+
+    .warning-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      background: #ff9800;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .warning-text {
+      font-size: 14px;
+      color: #e65100;
+      line-height: 1.5;
+    }
+
+    .cta-section {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      background: #ff9800;
+      color: #fff;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary:hover {
+      background: #f57c00;
+    }
+
+    .cta-text {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 32px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 20px;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+    }
+
+    .modal-content h5 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+      margin-top: 8px;
+    }
+
+    .input-row {
+      margin-bottom: 20px;
+    }
+
+    .input-row label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .input-row input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .input-row input:focus {
+      outline: none;
+      border-color: #ff9800;
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+    }
+
+    .input-row input[readonly] {
+      background: #f9fafb;
+      cursor: not-allowed;
+    }
+
+    #modal-send-message {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    #modal-loadingSpinner {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="lease-card">
+    <h3>Step 1 - Choose Your Product</h3>
+    <div class="dropdown-wrapper">
+      <select id="productSelect">
+        <option value="autocad" data-annual="3204">Autodesk AutoCAD</option>
+        <option value="revit" data-annual="4596" selected>Autodesk Revit</option>
+        <option value="aec" data-annual="5616">Autodesk AEC Collection</option>
+        <option value="ccc" data-annual="0">Autodesk Construction Cloud</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="invoiceAmount">Total Invoice Amount (ex GST)</label>
+      <div class="input-wrapper">
+        <input type="number" id="invoiceAmount" placeholder="Total Value (ex GST)" value="10000" min="0" step="100">
+        <span class="input-icon">💡</span>
+      </div>
+    </div>
+
+    <div class="payment-label">Monthly Payment (ex GST)</div>
+    <div class="section-title">View your 12-month lease plan</div>
+    <div class="payment-amount" id="paymentAmount">≈ A$360/month</div>
+    <div class="payment-note">Assumes standard business rate of 8.5% p.a.</div>
+    <div class="payment-note">Final quote will depend on credit approval and partner terms</div>
+
+    <div class="compare-section">
+      <div class="compare-title">Compare with Autodesk Official Pricing</div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Autodesk Subscription</th>
+            <th>Interscale Leasing</th>
+            <th>You Save</th>
+          </tr>
+        </thead>
+        <tbody id="compareBody">
+          <tr>
+            <td>Revit Annual</td>
+            <td>A$4,585 / year (A$382/month)</td>
+            <td>A$360 / month</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-icon">⚠</div>
+      <div class="warning-text">
+        To qualify for our leasing program, your total Autodesk license (or combined license + hardware) invoice must be at least AUD 10,000 (ex GST).
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <button class="btn-primary" id="getQuoteBtn">Consult Our Leasing Expert</button>
+      <div class="cta-text">Talk to our expert to get your exact numbers and approval details.</div>
+    </div>
+  </div>
+
+  <!-- Modal for the remaining fields -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h5>Consult Our Leasing Expert</h5>
+      <form id="modal-leasing-form">
+        <div class="input-row">
+          <label>Invoice Amount (ex GST)</label>
+          <input type="text" name="modal-invoice-amount" id="modal-invoice-amount" placeholder="Enter Amount" required readonly>
+        </div>
+        <div class="input-row">
+          <label>Customer Name</label>
+          <input type="text" name="modal-customer-name" id="modal-customer-name" placeholder="Enter Name" required>
+        </div>
+        <div class="input-row">
+          <label>Email Address</label>
+          <input type="email" name="modal-email" id="modal-email" placeholder="Enter Email" required>
+        </div>
+        <div class="input-row">
+          <label>Phone Number</label>
+          <input type="tel" name="modal-phone" id="modal-phone" placeholder="Enter Phone Number" required>
+        </div>
+        <div class="input-row">
+          <label>Company Name</label>
+          <input type="text" name="modal-company" id="modal-company" placeholder="Enter Company Name" required>
+        </div>
+        <button type="submit" id="modal-send-message" class="btn-primary">Submit</button>
+      </form>
+      <div id="modal-loadingSpinner" style="display: none; text-align: center;">Processing...</div>
+    </div>
+  </div>
+
+  <script>
+    const products = {
+      autocad: { name: 'Autodesk AutoCAD', annual: 3204, monthly: 267 },
+      revit: { name: 'Autodesk Revit', annual: 4596, monthly: 383 },
+      aec: { name: 'Autodesk AEC Collection', annual: 5616, monthly: 468 },
+      ccc: { name: 'Autodesk Construction Cloud', annual: 0, monthly: 0 }
+    };
+
+    const productSelect = document.getElementById('productSelect');
+    const invoiceInput = document.getElementById('invoiceAmount');
+    const paymentAmount = document.getElementById('paymentAmount');
+    const compareBody = document.getElementById('compareBody');
+    const getQuoteBtn = document.getElementById('getQuoteBtn');
+    
+    // Modal elements
+    const modal = document.getElementById('modal');
+    const closeModal = document.querySelector('.close');
+    const modalInvoiceAmount = document.getElementById('modal-invoice-amount');
+    const modalForm = document.getElementById('modal-leasing-form');
+    const loadingSpinner = document.getElementById('modal-loadingSpinner');
+
+    const interestRate = 8.5;
+    const termMonths = 12;
+
+    function calculateMonthlyPayment(principal, annualRate, months) {
+      if (principal <= 0) return 0;
+      const monthlyRate = (annualRate / 100) / 12;
+      if (monthlyRate === 0) return principal / months;
+      return principal * (monthlyRate / (1 - Math.pow(1 + monthlyRate, -months)));
+    }
+
+    function formatCurrency(amount) {
+      return 'A$' + Math.round(amount).toLocaleString();
+    }
+
+    function updateCalculations() {
+      const invoice = parseFloat(invoiceInput.value) || 0;
+      const selectedProduct = productSelect.value;
+      const product = products[selectedProduct];
+
+      const monthly = calculateMonthlyPayment(invoice, interestRate, termMonths);
+      paymentAmount.textContent = `≈ ${formatCurrency(monthly)}/month`;
+
+      if (product.annual > 0) {
+        const totalLeasing = monthly * termMonths;
+        const savings = product.annual - totalLeasing;
+        const savingsText = savings > 0 
+          ? `${formatCurrency(savings)} (${Math.round((savings / product.annual) * 100)}%)` 
+          : '-';
+        
+        compareBody.innerHTML = `
+          <tr>
+            <td>${product.name.replace('Autodesk ', '')} Annual</td>
+            <td>${formatCurrency(product.annual)} / year (${formatCurrency(product.monthly)}/month)</td>
+            <td>${formatCurrency(monthly)} / month</td>
+            <td>${savingsText}</td>
+          </tr>
+        `;
+      } else {
+        compareBody.innerHTML = `
+          <tr>
+            <td>${product.name}</td>
+            <td>Custom Quote</td>
+            <td>Custom Quote</td>
+            <td>-</td>
+          </tr>
+        `;
+      }
+    }
+
+    // Open modal and populate invoice amount
+    getQuoteBtn.addEventListener('click', () => {
+      const invoice = parseFloat(invoiceInput.value) || 0;
+      modalInvoiceAmount.value = formatCurrency(invoice);
+      modal.style.display = 'block';
+    });
+
+    // Close modal when clicking the X
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Handle form submission
+    modalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Show loading spinner
+      loadingSpinner.style.display = 'block';
+      
+      // Get form data
+      const formData = {
+        invoiceAmount: modalInvoiceAmount.value,
+        customerName: document.getElementById('modal-customer-name').value,
+        email: document.getElementById('modal-email').value,
+        phone: document.getElementById('modal-phone').value,
+        company: document.getElementById('modal-company').value,
+        product: products[productSelect.value].name
+      };
+      
+      // Simulate form submission (replace with actual API call)
+      setTimeout(() => {
+        console.log('Form submitted:', formData);
+        alert('Thank you! Our leasing expert will contact you shortly.');
+        loadingSpinner.style.display = 'none';
+        modal.style.display = 'none';
+        modalForm.reset();
+      }, 1500);
+    });
+
+    productSelect.addEventListener('change', updateCalculations);
+    invoiceInput.addEventListener('input', updateCalculations);
+
+    updateCalculations();
+  </script>
+</body>
+</html>
